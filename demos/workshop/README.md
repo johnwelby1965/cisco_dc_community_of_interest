@@ -78,11 +78,157 @@ Host ec2-54-80-193-109.compute-1.amazonaws.com
   User ubuntu
   HostName ec2-54-80-193-109.compute-1.amazonaws.com
   IdentityFile ~/.ssh/devnet_sdk_demo.pem
+
+Host 54.241.44.202
+  Hostname 54.241.44.202
+  User ubuntu
+  IdentityFile ~/.ssh/student-key_Truist_ACI.pem
   ```
 
 You will be provided a SSH private key file (PEM) for the training class, along with the values to specify for the user, host and hostname.
 
 After saving the configuration file, the new host will appear in the SSH TARGETS window. Verify the configuration by '+ window' icon to connect to the host in a new window.
 
+
+## Lab1
+
+Logon your GitLab account, create a new project, (https://gitlab.com/projects/new) and name it `workshop`.  Set as 'public'.  Select the `Initialize with a README`. Select `Create Project`.
+
+**Note:** Before uploading (pushing) to this repo, make the repo PRIVATE under `Settings -> General -> Visibility, project features, permissions`.
+
+### Clone
+
+Select `Clone` and copy the URL for `Clone with HTTPS`.
+
+Your copy buffer should have something similar to the following, substituted with your username.
+```
+https://gitlab.com/joelwking/workshop.git
+```
+
+** From your terminal window in VS Code. **
+
+#### Set global config values and clone
+Use your GitLab username and email address, update the configuration on your remote instance
+```
+$ git config --global user.name "joelwking"
+$ git config --global user.email joel.king@wwt.com
+$ git config --list
+```
+Now clone the respository.
+``` 
+$ cd
+$ git clone https://gitlab.com/joelwking/workshop.git
+```
+**Note:** So your don't forget make the repo PRIVATE under `Settings -> General -> Visibility, project features, permissions`.
+
+### Download the workshop files
+So we have some sample files to work from, do the following:
+
+```
+cd workshop
+git clone https://gitlab.com/joelwking/cisco_dc_community_of_interest.git
+```
+To prevent us from accidentially uploading any sensitive data, we will ignore the lab files at this point.
+```
+echo "cisco_dc_community_of_interest" >>.gitignore
+git status
+```
+
+### Install the Cisco ACI collection
+Install the collection, by default this will install in your `~/.ansible` folder.
+```
+cd ~
+ansible-galaxy collection install cisco.aci
+```
+From the terminal window, enter the following directory path.
+
+`cd ~/workshop/cisco_dc_community_of_interest/demos/engine/playbooks/`
+
+### Modify the sample playbook and files
+Go to the main IDE window and select the `Remote Explorer` icon on the left, and open the `workshop` folder. 
+
+Navigate down to `~/workshop/cisco_dc_community_of_interest/demos/engine/playbooks`
+
+Open the sample.yml playbook. Below the `password` variable in the `aci_login anchor` add the following line.
+
+```
+private_key: "{{ lookup('file', '{{ playbook_dir }}/files/{{ apic_username }}.key') }}"
+```
+Save the file.
+
+#### Create the key file
+Under the `files`, create a new file called 'admin.key' and paste in the key provided. You will be given this key via email or another out-of-band method.
+
+#### Null the existing credentials
+
+From your IDE window, look at files/passwords.yml, this is a vaulted file. We aren't going to use this file now, rather I want to emphasis the fact credentials can be encrypted and stored in a repository.
+
+From your terminal window, make a copy of the file and touch the file so the playbook can find an empty file.
+```
+$ mv files/passwords.yml files/passwords.yml-
+$ touch files/passwords.yml
+```
+
+### Run the playbook
+From the terminal window, in the `~/workshop/cisco_dc_community_of_interest/demos/engine/playbooks/` directory, execute the playbook.
+
+```
+$ ansible-playbook -v -i inventory.yml  ./sample.yml -e 'apic_hostname=sandboxapicdc.cisco.com'
+```
+
+Congratulation, you have run your first playbook! If all goes well, you have also automated the configuration of the Cisco DevNet always on ACI Sandbox.
+
+In this example, the configuration data came from the `host_vars` directory. Using the IDE editor, review what you see in that directory.
+
+What was the source of the configuration data? 
+`host_vars/sandboxapicdc.cisco.com`
+
+### Review
+
+In the sample playbook, we added a `private_key` variable, What would you remove (comment out) in the playbook to eliminate the warning?
+```
+[WARNING]: When doing ACI signatured-based authentication, providing parameter 'password' is not required
+```
+You can add a '#' prior to the `password` variable and re-run the playbook
+
+
+### Modify the playbook to use basis authentication rather than signature-based authentication
+
+Edit `files/passwords.yml` to include:
+```yaml
+---
+#
+#  Substitute 'cisco123,' with the password for the DevNet Sandbox APIC
+#
+  apic_password: cisco123,
+```
+In the `sample.yml` playbook, comment out the `private_key` variable and specify the variable `password` instead. Execute the playbook again to verify
+
+```
+$ ansible-playbook -v -i inventory.yml  ./sample.yml -e 'apic_hostname=sandboxapicdc.cisco.com'
+```
+This is the end of the first lab. You have updated an ACI fabric using Ansible using multiple authentication methods.
+
+### Save your lab environment
+If you wish to save your work, verify your GitLab repo is marked *PRIVATE*, then do the following.
+
+```
+cd ~workshop
+```
+edit the .gitignore file and add a '#' in front of the text, then save the file.
+
+```
+# cisco_dc_community_of_interest
+```
+Now issue these Git commands. You will be prompted for your GitLab username and password at the top of the screen.
+```
+git add .gitignore
+git add cisco_dc_community_of_interest/
+git status
+git add *
+git status
+git commit -m 'removed git ignore'
+git push origin master
+```
 ## Author
 joel.king@wwt.com GitHub/GitLab: @joelwking
