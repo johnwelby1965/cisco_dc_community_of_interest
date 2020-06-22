@@ -2,6 +2,15 @@
 all:
   children:
 
+    NGROK:
+      hosts:
+        changeme.ngrok.io:                     # Change to the NGROK https hostname
+          apic_hostname: changme.ngrok.io      # Change to the NGROK https hostname
+          apic_username: truist_admin
+          apic_use_proxy: no
+          apic_validate_certs: no
+          apic_password: foo!bar               # will provide this value as extra-var
+
     APIC:
       hosts:
         #

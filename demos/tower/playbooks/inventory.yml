@@ -3,6 +3,7 @@ all:
 
   hosts:
     ec2-54-196-78-91.compute-1.amazonaws.com: {}    
+    ec2-54-166-209-221.compute-1.amazonaws.com: {}
     EC2:
         # use `ansible-vault encrypt_string foo!bar`
         # user/service_account_gsd

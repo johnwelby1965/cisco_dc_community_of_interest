@@ -10,7 +10,17 @@ There are several user accounts required to participate in the training. You may
 ### WWT Digital Platform
 The ATC is a collaborative ecosystem to design, build, educate, demonstrate and deploy innovative technology products and integrated architectural solutions for World Wide Technology customers.
 
-Create an account on https://www.wwt.com/ using your business email address and complete your profile settings at https://www.wwt.com/my-account#MyProfile. 
+Create an account on https://www.wwt.com/ using your business email address and complete your profile settings at https://www.wwt.com/my-account#MyProfile.
+
+#### Launch the Lab
+
+Search for `Ansible Student VM` and select the lab. It is at URL [ttps://www.wwt.com/lab/ansible-student-vm](https://www.wwt.com/lab/ansible-student-vm).
+
+Launch the lab. Go to https://www.wwt.com/my-wwt/labs - Or select the labs page from the pop-up windows `Your virtual environment is ready. You can access it on the My Labs page.` Select `Open in ATC Lab Gateway`.  You may be prompted to authenticate with your email address and 14 character password.
+
+Make a note of the IP address under `===Student VM Prblic IP===`. This IP address is the public IP address of your AWS EC2 instance for this lab. 
+
+You will need this IP address to configure the VS Code remote development environment under section `Remote Explorer`.
 
 ### Version Control 
 Both GitLab (GitLab.com) and GitHub (GitHub.com) provide Git Version Control repository management services over the Internet. If you do not already have an account on both services, sign up for both, ideally using the same handle (username) for your account on each service. For this training, the free account tier is all you need.
