@@ -1,0 +1,66 @@
+#!/usr/bin/ansible-playbook
+---
+#
+#      Copyright (c) 2020 World Wide Technology, LLC.
+#      All rights reserved.
+#
+#      author: joel.king@wwt.com GitHub/GitLab @joelwking
+#
+#      description: 
+#
+#        This playbook manages Tenants, VRFs and fabric policies to demonstrate the Ansible ACI content collection.
+#
+#      usage:
+#
+#        ./sample_csv.yml -v -i inventory.yml -e 'ifile=./files/sample_csv_file.csv apic_hostname=sandboxapicdc.cisco.com apic_password=foo!bar'
+#
+#
+- name: Demo for the Cisco Data Center Community of Interest
+  hosts:  '{{ apic_hostname }}'
+  connection: local
+  gather_facts: no
+
+  vars_files:
+    # None
+
+  vars:
+    # We prepare an aci_login anchor for convenience
+    aci_login: &aci_login
+      hostname: '{{ apic_hostname }}'
+      username: '{{ apic_username }}'
+      password: '{{ apic_password }}'
+      # private_key: "{{ lookup('file', '{{ playbook_dir }}/files/{{ apic_username }}.key') }}"
+      use_proxy: '{{ apic_use_proxy }}'
+      validate_certs: '{{ apic_validate_certs }}'
+
+  tasks:
+
+    - name: Get facts from CSV file
+      csv_to_facts:
+        src: '{{ ifile }}'
+        table: spreadsheet
+
+    - name: Tenant Policy
+      block:
+        - name: Tenant (fvTenant)
+          cisco.aci.aci_tenant:
+            <<: *aci_login
+            #
+            state: '{{ item.state }}'
+            #
+            tenant: '{{ item.tenant }}'
+            description: '{{ item.description }}'
+          loop: '{{ spreadsheet }}'
+
+        - name: VRF (fvCtx) private network context associated to a tenant 
+          cisco.aci.aci_vrf:
+            <<: *aci_login
+            #
+            state: '{{ item.vrf_state }}'
+            #
+            tenant: '{{ item.tenant}}'
+            vrf: '{{ item.vrf }}'
+            descr: '{{ item.comments }}'
+            policy_control_preference: '{{ item.pcEnfPref }}'
+            policy_control_direction: '{{ item.pcEnfDir }}'
+          loop: '{{ spreadsheet }}'

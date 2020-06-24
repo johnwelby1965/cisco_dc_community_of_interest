@@ -102,7 +102,7 @@ After saving the configuration file, the new host will appear in the SSH TARGETS
 Select **Continue** when prompted with **Are you sure you want to continue?** This is adding the certificate to the `known_hosts` file.   
 
 
-## Lab1
+## Lab 1 : Authentication : Cisco APIC Sandbox
 
 Logon your GitLab account, create a new project, (https://gitlab.com/projects/new) and name it `workshop`.  Set as 'public'.  Select the `Initialize with a README`. Select `Create Project`.
 
@@ -175,7 +175,6 @@ Save the file.
 Under the `files`, create a new file called 'admin.key' and paste in the key provided. You will be given this key via email or another out-of-band method.
 
 #### Null the existing credentials
-
 From your IDE window, look at files/passwords.yml, this is a vaulted file. We aren't going to use this file now, rather I want to emphasis the fact credentials can be encrypted and stored in a repository.
 
 From your terminal window, make a copy of the file and touch the file so the playbook can find an empty file.
@@ -243,5 +242,106 @@ $ git status
 $ git commit -m 'removed git ignore'
 $ git push origin master
 ```
+
+## Lab 1A : Authentication : ATC Demo Fabric
+This lab is an optional extension to Lab 1. We have provided access to a second APIC running in the WWT Advanced Technology Center. This APIC is exposed to the Internet by a combination of NGINX and NGROK. The NGROK connection must be started by the instructor, using a temporary NGROK service. You will be provided the hostname of the public URL and the keyfile to access the demo account.
+
+### Update the `inventory.yml` file
+
+Update the `files/inventory.yml` with the temporary host of the NGROK server. For example, if the ngrok server is `bb130ece7dbb.ngrok.io`, your inventory file should look as follows.
+
+```yaml
+    NGROK:
+      hosts:
+        bb130ece7dbb.ngrok.io:                     # Change to the NGROK https hostname
+          apic_hostname: bb130ece7dbb.ngrok.io      # Change to the NGROK https hostname
+          apic_username: truist
+          apic_use_proxy: no
+          apic_validate_certs: no
+          apic_password: foo!bar                    # will provide this value as extra-var
+```
+#### Create the key file
+Under the `files`, create a new file called 'truist.key' and paste in the key provided. You will be given this key via email or another out-of-band method.
+
+#### Null the existing credentials
+From your IDE window, look at `files/passwords.yml`, this is a vaulted file. We aren't going to use this file now, rather I want to emphasis the fact credentials can be encrypted and stored in a repository.
+
+From your terminal window, make a copy of the file and touch the file so the playbook can find an empty file.
+```shell
+$ mv files/passwords.yml files/passwords.yml-
+$ touch files/passwords.yml
+```
+### Create a Source of Truth
+In Lab 1 the configuration input data is stored in the `host_vars` directory. The `group_vars` and `host_vars` directories may contain group variables and host variables, respectively. The group and host names from the inventory file are used to by Ansible to automatically read input data from these directories as configuration data.
+
+Go to the IDE window and open `host_vars/sandboxapicdc.cisco.com`. Save the file as `files/ngrok.yml`.
+
+Edit the playbook `sample.yml`.  Add an element to the `vars_files` to reference the file you created.
+
+```yaml
+vars_files:
+    - '{{ playbook_dir }}/files/passwords.yml'
+    - '{{ playbook_dir }}/files/ngrok.yml'
+```
+Remember to save your updates.
+
+### Execute the playbook
+From the playbook directory, execute the playbook, substituting the appropriate value for the temporary NGROK host.
+
+```shell
+$ ansible-playbook ./sample.yml -v -i inventory.yml -e 'apic_hostname=bb130ece7dbb.ngrok.io'
+```
+
+### Push your changes
+Push your changes to the GitLab remote. When prompted for username and password, use your GitLab credentials.
+
+```shell
+$ cd ~/workshop
+$ git add cisco_dc_community_of_interest/
+$ git commit -m 'Lab 1a'
+$ git push origin master
+```
+Logon your GitLab account, verify the repository is private, (there should be a lock icon above the Project ID:) and navigate in the GUI to review the changes you have made in this section.
+
+## Lab 2 : Custom modules
+
+Users can extend Ansible's functionality by writing their own modules (typically in Python). In this lab, we will download and use a custom module to read configuration data from a Excel / CSV file.
+
+The custom module for this lab is published on Cisco DevNet Code Exchange. Refer to https://developer.cisco.com/codeexchange/github/repo/joelwking/csv-source-of-truth. The Ansible documentation for adding local modules is at: https://docs.ansible.com/ansible/latest/dev_guide/developing_locally.html
+
+Ansible automatically loads all executable files found in certain directories as modules, one option is the playbook `library` directory. Download the custom module to that directory.
+
+```shell
+$ cd ~/workshop/cisco_dc_community_of_interest/demos/engine/playbooks
+$ wget https://raw.githubusercontent.com/joelwking/csv-source-of-truth/master/library/csv_to_facts.py -O ./library/csv_to_facts.py
+```
+To verify the module has been successfully downloaded, review the module documentation.
+
+```shell
+$ ansible-doc -M ./library -t module csv_to_facts
+```
+### Examine the playbook
+Examine the playbook `sample_csv.yml`.  This playbook includes a task to invoke the `csv_to_facts` module. This module will read the specified input CSV file and return Ansible facts to the playbook.
+
+```yaml
+    - name: Get facts from CSV file
+      csv_to_facts:
+        src: '{{ ifile }}'
+        table: spreadsheet
+```
+The module returns a list variable called `spreadsheet`. Each element in the list is a dictionary using the column header as the key and the column value as the value. The subsequent tasks in the playbook will use this data structure as input to the ACI module arguments.
+
+### Examine the Source of Truth
+From your IDE window, open  `/files/sample_csv_file.csv` which is the input file for the playbook. Note the column headers and the values of each row. 
+
+#### Execute the playbook
+From the terminal window, execute the playbook. The playbook uses the basic authentication (userid and password), specify the appropriate APIC password on the command line.
+
+Three extra variables are passed to the playbook, `ifile` is the Source of Truth, and the APIC hostname and credential.
+
+```shell
+ansible-playbook ./sample_csv.yml -i inventory.yml -e  'ifile=./files/sample_csv_file.csv apic_hostname=sandboxapicdc.cisco.com apic_password=cisco123,'
+```
+
 ## Author
 joel.king@wwt.com GitHub/GitLab: @joelwking
