@@ -343,5 +343,48 @@ Three extra variables are passed to the playbook, `ifile` is the Source of Truth
 ansible-playbook ./sample_csv.yml -i inventory.yml -e  'ifile=./files/sample_csv_file.csv apic_hostname=sandboxapicdc.cisco.com apic_password=cisco123,'
 ```
 
+## Lab 3 : Ansible Tower
+This lab demonstrates how the playbook and Source of Truth from Lab 2 can be incorporated into Ansible Tower. The collections and custom modules have been installed for you.
+
+We will logon an Ansible Tower instance running in AWS. The host name and credentials will be provided out-of-band.
+
+```
+https://ec2-54-81-23-3.compute-1.amazonaws.com/
+userid admin
+password __changeme123,__
+```
+
+### Inventory
+We create a host in the demo inventory for the target APIC. Use the `inventory.yml` example from Lab 2. For example, create a host named `sandboxapicdc.cisco.com` with these variables:
+
+```yaml
+apic_hostname: sandboxapicdc.cisco.com
+apic_username: admin
+apic_use_proxy: no
+apic_validate_certs: no
+```
+
+### Project
+The project definition references the GitLab repo. Create a project named `Lab3` with an SCM type of `Git` and the SCM URL as `https://gitlab.com/joelwking/cisco_dc_community_of_interest.git`. Save the project and verify the SCM update is complete.
+
+### Template
+Create a template named `Lab3`. From the playbook box select `demos\engine\playbooks\sample_csv.yml`. Select the inventory `Demo Inventory` and job type `run`. In the extra variables dialog box add these variables:
+
+```yaml
+ifile: ./files/sample_csv_file.csv 
+apic_hostname: sandboxapicdc.cisco.com 
+apic_password: cisco123,
+```
+Select the dialog box 'prompt on launch'.
+
+> **Note:** substitute the correct hostname and password.
+
+### Execute the Template
+To launch the job template, navigate to the Templates resource and click the Rocket ICON next to the Lab3 line.
+
+### Review the Output
+Review the output of the job by selecting `VIEWS-Jobs` from the menu.
+
+
 ## Author
 joel.king@wwt.com GitHub/GitLab: @joelwking
