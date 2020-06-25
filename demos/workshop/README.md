@@ -104,9 +104,9 @@ Select **Continue** when prompted with **Are you sure you want to continue?** Th
 
 ## Lab 1 : Authentication : Cisco APIC Sandbox
 
-Logon your GitLab account, create a new project, (https://gitlab.com/projects/new) and name it `workshop`.  Set as 'public'.  Select the `Initialize with a README`. Select `Create Project`.
+Logon your GitLab account, create a new project, (https://gitlab.com/projects/new) and name it `workshop`.  The setting can be  'public' or 'private'.  Select the `Initialize with a README`. Select `Create Project`.
 
-**Note:** Before uploading (pushing) to this repo, make the repo PRIVATE under `Settings -> General -> Visibility, project features, permissions`.
+**Note:** Before uploading (pushing) to this repo, make the repo PRIVATE under `Settings -> General -> Visibility, project features, permissions` as there will be clear text credentials present in the exercise.
 
 ### Clone
 
@@ -127,28 +127,28 @@ $ git config --global user.name "joelwking"
 $ git config --global user.email joel.king@wwt.com
 $ git config --list
 ```
-Now clone the respository.
+Now clone the repository. If it is marked `private`, at the top of the IDE window, you should be prompted for your GitLab username and password.
 ```shell 
-$ cd
+$ cd ~
 $ git clone https://gitlab.com/joelwking/workshop.git
 ```
 > **Note:** So your don't forget make the repo PRIVATE under `Settings -> General -> Visibility, project features, permissions`.  Scroll down and select **SAVE**.
 
 ### Download the workshop files
-So we have some sample files to work from, do the following:
+We will clone this repository so we have some sample files and playbooks to work from. Do the following:
 
 ```shell
 $ cd workshop
 $ git clone https://gitlab.com/joelwking/cisco_dc_community_of_interest.git
 ```
-To prevent us from accidentially uploading any sensitive data, we will ignore the lab files at this point.
+As a precaution from accidentally uploading any sensitive data, we will ignore the lab exercuse files at this point.
 ```shell
 $ echo "cisco_dc_community_of_interest" >>.gitignore
 $ git status
 ```
 
 ### Install the Cisco ACI collection
-Install the collection, by default this will install in your `~/.ansible` folder.
+Install the collection, by default it will install in your `~/.ansible` folder.
 ```shell
 $ cd ~
 $ ansible-galaxy collection install cisco.aci
@@ -164,7 +164,7 @@ Go to the main IDE window and select the `Remote Explorer` icon on the left, and
 
 Navigate down to `~/workshop/cisco_dc_community_of_interest/demos/engine/playbooks`
 
-Open the sample.yml playbook. Below the `password` variable in the `aci_login anchor` add the following line.
+Open the `sample.yml` playbook. Below the `password` variable in the `aci_login anchor` add the following line.
 
 ```yaml
 private_key: "{{ lookup('file', '{{ playbook_dir }}/files/{{ apic_username }}.key') }}"
@@ -172,12 +172,14 @@ private_key: "{{ lookup('file', '{{ playbook_dir }}/files/{{ apic_username }}.ke
 Save the file.
 
 #### Create the key file
-Under the `files`, create a new file called 'admin.key' and paste in the key provided. You will be given this key via email or another out-of-band method.
+Under the `files` directory, create a new file called `admin.key` and paste in the key provided. You will be given this key via email or another out-of-band method prior to class.
 
 #### Null the existing credentials
-From your IDE window, look at files/passwords.yml, this is a vaulted file. We aren't going to use this file now, rather I want to emphasis the fact credentials can be encrypted and stored in a repository.
+From your IDE window, look at `files/passwords.yml`, this is a vaulted file. We aren't going to use this file now, rather I want to emphasis the fact credentials can be encrypted and stored in a repository.
 
-From your terminal window, make a copy of the file and touch the file so the playbook can find an empty file.
+>**Note**: You can encrypt and decrypt files with `ansible-vault`. For example `$ ansible-vault encrypt passwords.yml` and enter a passphrase when prompted. You can then decrypt the file by entering `$ ansible-vault encrypt passwords.yml` and the passphrase. When running playbooks `--ask-vault-pass ` can be specified to be prompted for the passphrase.
+
+From your terminal window, make a copy of the file and touch the file so the playbook finds an empty file.
 ```shell
 $ mv files/passwords.yml files/passwords.yml-
 $ touch files/passwords.yml
@@ -194,11 +196,9 @@ Congratulation, you have run your first playbook! If all goes well, you have als
 
 In this example, the configuration data came from the `host_vars` directory. Using the IDE editor, review what you see in that directory.
 
-What was the source of the configuration data? 
-`host_vars/sandboxapicdc.cisco.com`
+What was the source of the configuration data?  Answer: `host_vars/sandboxapicdc.cisco.com`
 
 ### Review
-
 In the sample playbook, we added a `private_key` variable, What would you remove (comment out) in the playbook to eliminate the warning?
 ```shell
 [WARNING]: When doing ACI signatured-based authentication, providing parameter 'password' is not required
@@ -224,12 +224,12 @@ $ ansible-playbook -v -i inventory.yml  ./sample.yml -e 'apic_hostname=sandboxap
 This is the end of the first lab. You have updated an ACI fabric using Ansible using multiple authentication methods.
 
 ### Save your lab environment
-If you wish to save your work, verify your GitLab repo is marked *PRIVATE*, then do the following.
+If you wish to save your work, verify your GitLab repository is marked *PRIVATE*, then do the following.
 
 ```shell
 $ cd ~/workshop
 ```
-edit the .gitignore file and add a '#' in front of the text, then save the file.
+Edit the .gitignore file and add a '#' in front of the text, then save the file.
 
 ```
 # cisco_dc_community_of_interest
@@ -298,7 +298,7 @@ Push your changes to the GitLab remote. When prompted for username and password,
 ```shell
 $ cd ~/workshop
 $ git add cisco_dc_community_of_interest/
-$ git commit -m 'Lab 1a'
+$ git commit -m 'Lab 1A'
 $ git push origin master
 ```
 Logon your GitLab account, verify the repository is private, (there should be a lock icon above the Project ID:) and navigate in the GUI to review the changes you have made in this section.
@@ -321,7 +321,7 @@ To verify the module has been successfully downloaded, review the module documen
 $ ansible-doc -M ./library -t module csv_to_facts
 ```
 ### Examine the playbook
-Examine the playbook `sample_csv.yml`.  This playbook includes a task to invoke the `csv_to_facts` module. This module will read the specified input CSV file and return Ansible facts to the playbook.
+Examine the playbook `sample_csv.yml`.  This playbook includes a task to invoke the `csv_to_facts` module we downloaded. This module will read the specified input CSV file and return Ansible facts to the playbook. These facts will be the Source of Truth for configuring the APIC.
 
 ```yaml
     - name: Get facts from CSV file
@@ -329,7 +329,7 @@ Examine the playbook `sample_csv.yml`.  This playbook includes a task to invoke 
         src: '{{ ifile }}'
         table: spreadsheet
 ```
-The module returns a list variable called `spreadsheet`. Each element in the list is a dictionary using the column header as the key and the column value as the value. The subsequent tasks in the playbook will use this data structure as input to the ACI module arguments.
+The module returns a list variable named `spreadsheet`. Each element in the list is a dictionary using the column header as the key and the column value as the value. The subsequent tasks in the playbook will use this data structure as input to the Ansible ACI module arguments.
 
 ### Examine the Source of Truth
 From your IDE window, open  `/files/sample_csv_file.csv` which is the input file for the playbook. Note the column headers and the values of each row. 
@@ -385,6 +385,8 @@ To launch the job template, navigate to the Templates resource and click the Roc
 ### Review the Output
 Review the output of the job by selecting `VIEWS-Jobs` from the menu.
 
+## Summary
+In these lab exercises, we have created out own GitLab repository, cloned an additional repository which included sample data and playbooks. We have examined and modified the playbooks and configuration data. Both basic authentication and signature based authentication have been examined. We downloaded a custom module which reads a CSV file as a Source of Truth to configure the APIC. Finally, we demonstrate using Ansible Tower to execute a sample playbook using the CSV file as input.
 
 ## Author
 joel.king@wwt.com GitHub/GitLab: @joelwking
