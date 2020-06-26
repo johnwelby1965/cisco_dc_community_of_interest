@@ -1,39 +1,44 @@
-Student Resources
------------------
+Ansible Automation : ACI
+------------------------
 
+## Student Resources
 To make these demonstrations a valuable training experience you will need some software on the personal computer you use for your day-to-day activities. 
 
-
-## User Accounts
+### User Accounts
 There are several user accounts required to participate in the training. You may already have one or more of these accounts.
 
-### WWT Digital Platform
+#### WWT Digital Platform
 The ATC is a collaborative ecosystem to design, build, educate, demonstrate and deploy innovative technology products and integrated architectural solutions for World Wide Technology customers.
 
 Create an account on https://www.wwt.com/ using your business email address and complete your profile settings at https://www.wwt.com/my-account#MyProfile.
 
-#### Launch the Lab
-
+##### Launch the Lab
 Search for `Ansible Student VM` and select the lab. It is at URL [ttps://www.wwt.com/lab/ansible-student-vm](https://www.wwt.com/lab/ansible-student-vm).
 
 Launch the lab. Go to https://www.wwt.com/my-wwt/labs - Or select the labs page from the pop-up windows `Your virtual environment is ready. You can access it on the My Labs page.` Click `Access Lab`, then select `Open in ATC Lab Gateway`.  You may be prompted to authenticate with your email address and 14 character password.
 
-Make a note of the IP address under `===Student VM Public IP===`. This IP address is the public IP address of your AWS EC2 instance for this lab. 
+Once connected, your terminal session is connected to the EC2 instance. 
+
+Make a note of the IP address under `===Student VM Public IP===`. This IP address is the public IP address of your AWS EC2 instance for this lab.
 
 You will need this IP address to configure the VS Code remote development environment under section `Remote Explorer`.
 
-### Version Control 
+> **Note**: You can test connectivity from your laptop to this instance using a SSH client and private key file (PEM) for the training class. `ssh -i student-key_Truist_ACI.pem ubuntu@<Student VM Public IP>`.
+
+<!--- https://github.com/tylerhatton/ansible-student-lab-tf-template -->  
+
+#### Version Control 
 Both GitLab (GitLab.com) and GitHub (GitHub.com) provide Git Version Control repository management services over the Internet. If you do not already have an account on both services, sign up for both, ideally using the same handle (username) for your account on each service. For this training, the free account tier is all you need.
 
-### Cisco DevNet
-Cisco DevNet is Cisco's developer program to help IT professionals develop integrations with Cisco products. It also hosts learning tracts and sandbox environments. Join DevNet for free at https://developer.cisco.com/
+#### Cisco DevNet
+Cisco DevNet is a developer program to help IT professionals develop integrations with Cisco products. It also hosts learning tracts and sandbox environments. Join DevNet for free at https://developer.cisco.com/
 
-## Install Software
+### Install Software
 Hands-on experience (construction) is a key to learning a new topic. Because our 'hands are on keyboards' most of the day, the students of this training will benefit the most if they learn automation with their own version control accounts and development environment on their laptop. 
 
 In addition to a computer running the macOS, Linux, and Windows 10 operating systems, the following software is required for this training environment.
 
-### Visual Studio Code
+#### Visual Studio Code
 VS Code is a free code editor, which runs on the aforementioned operating systems. Download and install it at https://code.visualstudio.com/download. 
 
 While there are a number of suitable editors available for free or for a nominal license fee, this training makes use of the VS Code [Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh). The Visual Studio Code Remote - SSH extension allows you to open a remote folder on any remote machine, (virtual machine, or container) and terminal window with a running SSH server. 
@@ -44,13 +49,13 @@ As part of the training environment, a remote SSH host will be set up which incl
 
 There are a number of on-line tutorials to assist with setting up your laptop. See [Remote Development tutorials](https://code.visualstudio.com/docs/remote/remote-tutorials).
 
-#### SSH client
+##### SSH client
 Your laptop will need a supported SSH client. Refer to [Installing a supported SSH client]https://code.visualstudio.com/docs/remote/troubleshooting#_installing-a-supported-ssh-client).
 
-##### macOS
+###### macOS
 For macOS, you should not need to install an additional ssh client. 
 
-##### Windows
+###### Windows
 For Windows, installing Git for Windows is recommended. Refer to https://git-scm.com/download/win. 
 
 Once installed, determine the absolute path of the `ssh` executable. It may be at location `c:\Program Files\Git\usr\bin\ssh.exe`.
@@ -67,7 +72,7 @@ If you select the 'gear' icon next to the `remote.ssh.path` select `Copy Setting
 
 Close the Settings window.
 
-#### Remote Explorer
+##### Remote Explorer
 Prior to class you will be provided access to a remote Linux instance. To configure, select the 'Remote Explorer' icon on the left side of the window. Select the 'gear' icon to create a  'custom configuration file'. Provide an absolute path to the configuration file. For example: `C:\Users\kingjoe\.ssh\config`.
 
 When selecting the '+' icon next to the SSH TARGETS, you will be prompted for an 'SSH Connection Command', enter `ssh training@example.net` an press enter to confirm your input.
@@ -203,7 +208,7 @@ In the sample playbook, we added a `private_key` variable, What would you remove
 ```shell
 [WARNING]: When doing ACI signatured-based authentication, providing parameter 'password' is not required
 ```
-You can add a '#' prior to the `password` variable and re-run the playbook
+You can add a '#' prior to the `password` variable to comment out that line and re-run the playbook
 
 
 ### Modify the playbook to use basis authentication rather than signature-based authentication
@@ -212,9 +217,9 @@ Edit `files/passwords.yml` to include:
 ```yaml
 ---
 #
-#  Substitute 'cisco123,' with the password for the DevNet Sandbox APIC
+#  Substitute '__apicpassword__' with the password for the DevNet Sandbox APIC
 #
-  apic_password: cisco123,
+  apic_password: __apicpassword__
 ```
 In the `sample.yml` playbook, comment out the `private_key` variable and specify the variable `password` instead. Execute the playbook again to verify
 
@@ -340,7 +345,7 @@ From the terminal window, execute the playbook. The playbook uses the basic auth
 Three extra variables are passed to the playbook, `ifile` is the Source of Truth, and the APIC hostname and credential.
 
 ```shell
-ansible-playbook ./sample_csv.yml -i inventory.yml -e  'ifile=./files/sample_csv_file.csv apic_hostname=sandboxapicdc.cisco.com apic_password=cisco123,'
+ansible-playbook ./sample_csv.yml -i inventory.yml -e  'ifile=./files/sample_csv_file.csv apic_hostname=sandboxapicdc.cisco.com apic_password=__apicpassword__'
 ```
 
 ## Lab 3 : Ansible Tower
@@ -373,7 +378,7 @@ Create a template named `Lab3`. From the playbook box select `demos\engine\playb
 ```yaml
 ifile: ./files/sample_csv_file.csv 
 apic_hostname: sandboxapicdc.cisco.com 
-apic_password: cisco123,
+apic_password: __apicpassword__
 ```
 Select the dialog box 'prompt on launch'.
 
@@ -386,7 +391,7 @@ To launch the job template, navigate to the Templates resource and click the Roc
 Review the output of the job by selecting `VIEWS-Jobs` from the menu.
 
 ## Summary
-In these lab exercises, we have created out own GitLab repository, cloned an additional repository which included sample data and playbooks. We have examined and modified the playbooks and configuration data. Both basic authentication and signature based authentication have been examined. We downloaded a custom module which reads a CSV file as a Source of Truth to configure the APIC. Finally, we demonstrate using Ansible Tower to execute a sample playbook using the CSV file as input.
+In these lab exercises, we have created our own GitLab repository, cloned an additional repository which, included sample data and playbooks. We have examined and modified the playbooks and configuration data. We have examined the configuration of both basic authentication and signature-based authentication. We downloaded a custom module that reads a CSV file as a Source of Truth to configure the APIC. Finally, we demonstrate using Ansible Tower to execute a sample playbook using the CSV file as input.
 
 ## Author
 joel.king@wwt.com GitHub/GitLab: @joelwking
