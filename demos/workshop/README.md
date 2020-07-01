@@ -391,7 +391,7 @@ To launch the job template, navigate to the Templates resource and click the Roc
 Review the output of the job by selecting `VIEWS-Jobs` from the menu.
 
 ## Summary
-In these lab exercises, we have created our own GitLab repository, cloned an additional repository which, included sample data and playbooks. We have examined and modified the playbooks and configuration data. We have examined the configuration of both basic authentication and signature-based authentication. We downloaded a custom module that reads a CSV file as a Source of Truth to configure the APIC. Finally, we demonstrate using Ansible Tower to execute a sample playbook using the CSV file as input.
+In these lab exercises, we have created our own GitLab repository, cloned an additional repository, which included sample data and playbooks. We have examined and modified the playbooks and configuration data. The use and configuration of both basic authentication and signature-based authentication are demonstrated. We installed and used the 'ansible-galaxy' command to install the Cisco ACI Content Collection. Showing Ansible's extensibility, we downloaded a custom module that reads a CSV file as a Source of Truth to configure the APIC. Finally, we demonstrate using Ansible Tower to execute a sample playbook from a remote Git repository using the custom Python module, reading a CSV file as input.
 
 ## Author
 joel.king@wwt.com GitHub/GitLab: @joelwking
