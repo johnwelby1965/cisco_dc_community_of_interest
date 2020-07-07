@@ -9,7 +9,7 @@
 #          https://about.gitlab.com/blog/2019/07/01/using-ansible-and-gitlab-as-infrastructure-for-code/
 #
 
-image: williamyeh/ansible:ubuntu18.04
+image: joelwking/ansible:1.0
 
 stages:
   - lint
@@ -19,10 +19,9 @@ ansible_linting:
     GIT_SSL_NO_VERIFY: "True"
   stage: lint
   script:
-    - apt-get -y update
-    - apt-get -y upgrade
+
     - ansible --version
     - ansible-galaxy collection install cisco.aci
-    - pip install ansible-lint
+    # - pip install ansible-lint
     - ansible-lint --version
     - ansible-lint demos/engine/playbooks/sample.yml
