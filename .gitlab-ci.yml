@@ -8,6 +8,8 @@
 #          https://gitlab.com/gitlab-org/gitlab/-/issues/37470
 #          https://about.gitlab.com/blog/2019/07/01/using-ansible-and-gitlab-as-infrastructure-for-code/
 #
+#      note: additional packages can be installed by adding them to the 'script' commands, e.g.
+#            # - pip install ansible-lint
 
 image: joelwking/ansible:1.0
 
@@ -19,9 +21,7 @@ ansible_linting:
     GIT_SSL_NO_VERIFY: "True"
   stage: lint
   script:
-
     - ansible --version
     - ansible-galaxy collection install cisco.aci
-    # - pip install ansible-lint
     - ansible-lint --version
     - ansible-lint demos/engine/playbooks/sample.yml
