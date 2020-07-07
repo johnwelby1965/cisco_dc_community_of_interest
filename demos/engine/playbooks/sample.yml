@@ -46,13 +46,13 @@
             description: '{{ item.descr }}'
           loop: '{{ fvTenant }}'
 
-        - name: VRF (fvCtx) private network context associated to a tenant 
+        - name: VRF (fvCtx) private network context associated to a tenant
           cisco.aci.aci_vrf:
             <<: *aci_login
             #
             state: '{{ item.state }}'
             #
-            tenant: '{{ item.fvTenant.name}}'
+            tenant: '{{ item.fvTenant.name }}'
             vrf: '{{ item.name }}'
             descr: '{{ item.descr }}'
             policy_control_preference: '{{ item.pcEnfPref }}'
@@ -74,7 +74,7 @@
             #
             lldp_policy: '{{ item.name }}'
             description: '{{ item.descr }}'
-            receive_state: '{{ item.adminRxSt }}' 
+            receive_state: '{{ item.adminRxSt }}'
             transmit_state: '{{ item.adminTxSt }}'
           loop: '{{ lldpIfP }}'
 
