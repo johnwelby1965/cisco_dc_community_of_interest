@@ -1,0 +1,24 @@
+#
+#      Copyright (c) 2020 World Wide Technology, LLC.
+#      All rights reserved.
+#
+#      author: joel.king@wwt.com GitHub/GitLab @joelwking
+#
+#      references:
+#          https://gitlab.com/gitlab-org/gitlab/-/issues/37470
+#          https://about.gitlab.com/blog/2019/07/01/using-ansible-and-gitlab-as-infrastructure-for-code/
+#
+
+image: williamyeh/ansible:ubuntu18.04
+
+stages:
+  - lint
+
+ansible_linting:
+  variables:
+    GIT_SSL_NO_VERIFY: "True"
+  stage: lint
+  script:
+    - pip install ansible-lint
+    - ansible-lint --version
+    - ansible-lint demos/engine/playbooks/sample.yml
