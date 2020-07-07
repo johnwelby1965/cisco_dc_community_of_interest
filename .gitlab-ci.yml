@@ -19,8 +19,8 @@ ansible_linting:
     GIT_SSL_NO_VERIFY: "True"
   stage: lint
   script:
-    - sudo apt-get update
-    - sudo apt-get upgrade
+    - apt-get update
+    - apt-get upgrade
     - ansible --version
     - ansible-galaxy collection install cisco.aci
     - pip install ansible-lint
