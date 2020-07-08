@@ -38,9 +38,10 @@ This lab provides experience configuring Ansible Tower to execute the playbooks 
 
 ## Day 3
 
-*Session 1* : 45 min. **GitLab CI/CD Pipeline** 
+*Session 1* : 45 min. : **GitLab CI/CD Pipeline** 
 
 This lecture introduces the concept of CI/CD (continuous integration, continuous delivery, and continuous deployment) and demonstrates implementing a GitLab CI/CD Pipeline to implement Ansible Lint for Static Code Analysis of playbooks used in the labs and lectures. Also explained is creating and publishing an image to DockerHub to implement the pipeline.
 
-*Lab 1*  : 45 min. **GitLab CI/CD Pipeline**
+*Lab 1*  : 45 min. : **GitLab CI/CD Pipeline**
+
 This lab provides the students with hands-on experience with creating their own Docker image, publishing the image, and using the image to create a GitLab CI/CD Pipeline in their workshop repository.
