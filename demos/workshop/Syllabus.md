@@ -35,3 +35,12 @@ This lab demonstrates using Excel files as a source of truth for playbooks manag
 *Lab 3* : 60 min. : **Configure and execute your playbook using Ansible Tower**
 
 This lab provides experience configuring Ansible Tower to execute the playbooks from Lab 1 and 2. This lab reinforces the concept of promoting workflow from the network programmability developer's desktop to production deployment by using version control and Ansible Tower.
+
+## Day 3
+
+*Session 1* : 45 min. **GitLab CI/CD Pipeline** 
+
+This lecture introduces the concept of CI/CD (continuous integration, continuous delivery, and continuous deployment) and demonstrates implementing a GitLab CI/CD Pipeline to implement Ansible Lint for Static Code Analysis of playbooks used in the labs and lectures. Also explained is creating and publishing an image to DockerHub to implement the pipeline.
+
+*Lab 1*  : 45 min. **GitLab CI/CD Pipeline**
+This lab provides the students with hands-on experience with creating their own Docker image, publishing the image, and using the image to create a GitLab CI/CD Pipeline in their workshop repository.
