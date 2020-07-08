@@ -43,7 +43,7 @@
             state: '{{ item.state }}'
             #
             tenant: '{{ item.name }}'
-            description: '{{ item.descr }}'
+            description: '{{ item.descr}}'
           loop: '{{ fvTenant }}'
 
         - name: VRF (fvCtx) private network context associated to a tenant
