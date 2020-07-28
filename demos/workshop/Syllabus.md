@@ -2,7 +2,7 @@ Syllabus
 --------
 
 
-## Day 1
+## Section 100
 
 *Introduction* : 30 min. : **Training goals and introductions**
 
@@ -22,7 +22,16 @@ This section highlights the components of the training environment, which includ
 
 In this session the students will verify connectivity to the lab resources from their laptop.
 
-## Day 2
+## Section 110
+
+*Session 1* : 45 min. : **Introduction to Git for Network Engineers**
+Develop an understanding of the importance of the incorporating revision control for network configuration files. Provide resources to enable the student with a hands-on experience using Git and GitHub.
+
+*Session 2* : 45 min. : **Data Serialization Formats**
+Overview of data serialization formats; YAML, JSON, XML and CSV. Examine how they relate to Python variables and Ansible Playbooks.
+<!---    https://www.ciscolive.com/c/dam/r/ciscolive/apjc/docs/2018/pdf/DEVNET-3611.pdf -->
+
+## Section 200
 
 *Lab 1* : 60 min. : **Manage Tenants, VRFs and fabric policies**
 
@@ -36,7 +45,14 @@ This lab demonstrates using Excel files as a source of truth for playbooks manag
 
 This lab provides experience configuring Ansible Tower to execute the playbooks from Lab 1 and 2. This lab reinforces the concept of promoting workflow from the network programmability developer's desktop to production deployment by using version control and Ansible Tower.
 
-## Day 3
+## Section 210
+*Lab 1* : 30 min. : **Cisco DNA Center Platform**
+This lab uses a Juypter Notebook exercise to authenticate with DNA Center and show Python code using the Cisco DNA center APIs to retrieve and display wireless health information.
+
+*Lab 2* : 30 min. : **Execute a playbook to manage VLANs using Ansible Tower**
+This lab provides experience configuring Ansible Tower to execute a playbook to manage a VLAN on  IOS-XE devices.
+
+## Section 300
 
 *Session 1* : 45 min. : **GitLab CI/CD Pipeline** 
 
