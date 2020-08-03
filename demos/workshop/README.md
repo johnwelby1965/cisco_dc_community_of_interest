@@ -1,5 +1,5 @@
-Ansible Automation : ACI
-------------------------
+Ansible Automation Workshop
+---------------------------
 
 ## Student Resources
 To make these demonstrations a valuable training experience you will need some software on the personal computer you use for your day-to-day activities. 
@@ -11,6 +11,8 @@ There are several user accounts required to participate in the training. You may
 The ATC is a collaborative ecosystem to design, build, educate, demonstrate and deploy innovative technology products and integrated architectural solutions for World Wide Technology customers.
 
 Create an account on https://www.wwt.com/ using your business email address and complete your profile settings at https://www.wwt.com/my-account#MyProfile.
+
+>Note: To launch labs, you will need to register using an email addresses which is identified as a WWT customer.
 
 ##### Launch the Lab
 Search for `Ansible Student VM` and select the lab. It is at URL [ttps://www.wwt.com/lab/ansible-student-vm](https://www.wwt.com/lab/ansible-student-vm).
@@ -99,13 +101,34 @@ Host ec2-54-80-193-109.compute-1.amazonaws.com
 Host 54.241.44.202
   Hostname 54.241.44.202
   User ubuntu
-  IdentityFile ~/.ssh/student-key_Truist_ACI.pem
+  IdentityFile ~/.ssh/student-key.pem
 ```
 
 After saving the configuration file, the new host will appear in the SSH TARGETS window. Verify the configuration by '+ window' icon to connect to the host in a new window.
 
 Select **Continue** when prompted with **Are you sure you want to continue?** This is adding the certificate to the `known_hosts` file.   
 
+## Install additional software
+The remote Linux instance has Ansible and Git installed. If you need additional software, or Python Packages, install them from the terminal window.  This step also provides an opportunity to become familiar with using VS Code as an editor and terminal to the remove system. 
+
+As an example, Docker can be installed by following these steps:
+
+Clone the target directory.
+```bash
+$ git clone https://github.com/joelwking/devnet-sdk.git
+```
+Enter the directory and execute the Ansible playbook to install Docker.
+```bash
+$ cd devnet-sdk/playbooks
+```
+Edit the playbook file `install_docker.yml`  and  specify `localhost` as the target host. Save the file.  Execute the playbook.
+```bash
+$ ansible-playbook  install_docker.yml 
+```
+Verify Docker is installed correctly, run Hello World.
+```bash
+$ ansible-playbook  install_docker.yml 
+```
 
 ## Lab 1 : Authentication : Cisco APIC Sandbox
 
