@@ -12,7 +12,7 @@ The ATC is a collaborative ecosystem to design, build, educate, demonstrate and 
 
 Create an account on https://www.wwt.com/ using your business email address and complete your profile settings at https://www.wwt.com/my-account#MyProfile.
 
->Note: To launch labs, you will need to register using an email addresses which is identified as a WWT customer.
+> **Note**: To launch labs, you will need to register using an email addresses which is identified as a WWT customer.
 
 ##### Launch the Lab
 Search for `Ansible Student VM` and select the lab. It is at URL [ttps://www.wwt.com/lab/ansible-student-vm](https://www.wwt.com/lab/ansible-student-vm).
@@ -127,7 +127,7 @@ $ ansible-playbook  install_docker.yml
 ```
 Verify Docker is installed correctly, run Hello World.
 ```bash
-$ ansible-playbook  install_docker.yml 
+$ sudo docker run hello-world
 ```
 
 ## Lab 1 : Authentication : Cisco APIC Sandbox
