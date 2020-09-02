@@ -1,0 +1,54 @@
+
+#!/usr/bin/ansible-playbook
+---
+#
+#      Copyright (c) 2020 World Wide Technology, LLC.
+#      All rights reserved.
+#
+#      author: joel.king@wwt.com GitHub/GitLab @joelwking
+#
+#      description:
+#        This playbook loads file(s) to Minio and then retrieves the file(s).
+#
+#      usage:
+#
+#        ./minio.yml -v -e 'bucket="olive-iron"'
+#
+- name: Data Manipulation DevNet Create 2020
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  module_defaults:
+    aws_s3:
+      s3_url: 'http://{{ minio.host }}:{{ minio.port }}'
+      aws_access_key: '{{ minio.access_key }}'
+      aws_secret_key: '{{ minio.secret_key }}'
+      validate_certs: False
+      encrypt: False
+      bucket: '{{ bucket | default("devnet") }}'
+
+  vars_files:
+    - '{{ playbook_dir }}/passwords.yml'
+
+  vars:
+    input:
+      - name: '{{ playbook_dir }}/files/aci/DHCPRelay.csv'
+        state: put
+        meta_data: 'type=csv'
+
+  tasks:
+    - name: PUT/upload with metadata
+      aws_s3:
+        object: '{{ item.name | basename }}'
+        src: '{{ item.name }}'
+        mode: '{{ item.state }}'
+        metadata: '{{ item.meta_data }}'
+      loop: '{{ input }}'
+
+    - name: Download the file
+      aws_s3:
+        object: '{{ item.name | basename }}'
+        dest: '/tmp/{{ item.name | basename }}'
+        mode: get
+      loop: '{{ input }}'
