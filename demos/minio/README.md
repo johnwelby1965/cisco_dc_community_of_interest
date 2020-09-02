@@ -4,9 +4,7 @@ Docker and MinIO
 
 Refer to: https://min.io/product
 
-** MinIO is best suited for high performance tasks such as analytics, machine learning and modern, high throughput application development. ... **
-
-** ... As an object store, MinIO can store unstructured data such as photos, videos, log files, backups and container / VM images. Size of an object can range from a few KBs to a maximum of 5TB.**
+> __MinIO is best suited for high performance tasks such as analytics, machine learning and modern, high throughput application development. ... As an object store, MinIO can store unstructured data such as photos, videos, log files, backups and container / VM images. Size of an object can range from a few KBs to a maximum of 5TB.__
 
 Amazon S3 or Amazon Simple Storage Service is a service offered by Amazon Web Services that provides object storage through a web service interface.
 
@@ -15,6 +13,8 @@ In the companion playbook `minio.yml`, we illustrate using the Ansible `aws_s3` 
 This capability provides a means for an organization to use both an internally hosted object store provided by MinIO as well as the AWS pubic cloud service Amazon S3 to store and retrieve configuration data for playbooks.
 
 # Deploy MINIO using Docker
+These steps will guide you to installing the MinIO docker image.
+
 ## Add your account to the docker group
 ```
 sudo usermod -aG docker $USER

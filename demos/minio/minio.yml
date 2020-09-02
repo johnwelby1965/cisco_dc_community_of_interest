@@ -14,6 +14,16 @@
 #
 #        ./minio.yml -v -e 'bucket="olive-iron"'
 #
+#
+#      The passwords.yml file is encrypted with ansible-vault and the clear text should be formatted
+#      as YAML in this manner.
+#
+#      minio:
+#        secret_key: mysecretkey
+#        access_key: mysccesskey
+#        port: 9000
+#        host: rocket.sandbox.wwtatc.local
+#
 - name: Data Manipulation DevNet Create 2020
   hosts: localhost
   connection: local
