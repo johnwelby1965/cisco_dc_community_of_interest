@@ -32,6 +32,6 @@ step_two:
     GIT_SSL_NO_VERIFY: "True"
   stage: secondary
   script:
-    - sudo apt update
-    - sudo apt install dnsutils
+    - apt update
+    - apt install dnsutils
     - dig wwt.com
