@@ -29,8 +29,7 @@ ansible_linting:
 
 step_two:
   variables:
-    GIT_SSL_NO_VERIFY: "True"
+    GIT_SSL_NO_VERIFY: "False"
   stage: secondary
   script:
-    - apt install dnsutils -y
-    - dig wwt.com
+    - echo "$GIT_SSL_NO_VERIFY"
