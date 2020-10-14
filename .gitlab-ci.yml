@@ -15,6 +15,7 @@ image: joelwking/ansible:1.0
 
 stages:
   - lint
+  - secondary
 
 ansible_linting:
   variables:
@@ -25,3 +26,10 @@ ansible_linting:
     - ansible-galaxy collection install cisco.aci
     - ansible-lint --version
     - ansible-lint demos/engine/playbooks/sample.yml
+
+step_two:
+  variables:
+    GIT_SSL_NO_VERIFY: "True"
+  stage: secondary
+  script:
+    - dig wwt.com
