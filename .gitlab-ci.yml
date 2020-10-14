@@ -16,6 +16,7 @@ image: joelwking/ansible:1.0
 stages:
   - lint
   - secondary
+  - tertiary
 
 ansible_linting:
   variables:
@@ -33,3 +34,10 @@ step_two:
   stage: secondary
   script:
     - echo "$GIT_SSL_NO_VERIFY"
+
+step_three:
+  variables:
+    GIT_SSL_NO_VERIFY: "True"
+  stage: tertiary
+  script:
+    - whoami
