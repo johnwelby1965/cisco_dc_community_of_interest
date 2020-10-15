@@ -21,7 +21,7 @@
   gather_facts: no
 
   vars_files:
-    - '{{ playbook_dir }}/files/passwords.yml'    
+    - '{{ playbook_dir }}/files/passwords.yml'
 
   vars:
     # We prepare an aci_login anchor for convenience
