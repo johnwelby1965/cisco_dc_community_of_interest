@@ -31,6 +31,17 @@ Develop an understanding of the importance of the incorporating revision control
 Overview of data serialization formats; YAML, JSON, XML and CSV. Examine how they relate to Python variables and Ansible Playbooks.
 <!---    https://www.ciscolive.com/c/dam/r/ciscolive/apjc/docs/2018/pdf/DEVNET-3611.pdf -->
 
+## Section 120
+
+*Session 1*  :  45 min. : **Infrastrucutre as Code**
+
+Programmable Infrastructure (Infrastructure as Code), is a foundational DevOps component enabling The First Way, the fast flow of work through the system. For every network device configuration, there must be one Source of Truth, which is programatically accessible via an API or file URL. Historically the Source of Truth was the configuration stored on the device itself. Network managers must eliminate the device configuration as the Source of Truth, rather using version controlled configuration artifacts and configuration data sources such as IP address management (IPAM) systems.
+
+Attendees would benefit by listening to the podcast Gitlab Courseware as Code with Ben Allison https://softwareengineeringdaily.com/2020/08/17/gitlab-courseware-as-code-with-ben-allison/ hosted by Software Engineering Daily prior to this session.
+
+*Lab 1*  :  45 min. : **Infrastructure as Code**
+This lab demonstrates the concepts of Infrastructure as Code by using version controlled (Git) device configuration files.
+
 ## Section 200
 
 *Lab 1* : 60 min. : **Manage Tenants, VRFs and fabric policies**
