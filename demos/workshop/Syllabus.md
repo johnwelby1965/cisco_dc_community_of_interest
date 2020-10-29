@@ -64,6 +64,13 @@ This lab uses a Juypter Notebook exercise to authenticate with DNA Center and sh
 *Lab 2* : 30 min. : **Execute a playbook to manage VLANs using Ansible Tower**
 This lab provides experience configuring Ansible Tower to execute a playbook to manage a VLAN on  IOS-XE devices.
 
+## Section 240
+*Session 1*  :  60 min. : **Automating ACI with Terraform**
+This lecture develops a working knowledge of Terraform with a focus on managing Cisco ACI recsources. It demonstrates how to create a virtual environment using Vagrant and how to install Terraform and the ACI provider. It reviews the Terraform taxonomy and how to configure the ACI provider definition. It breaks down the Terraform components and workflow to manage ACI resources.
+
+*Lab 1*  :  60 min.  : **Manage ACI resources**
+This lab provides a hands-on demonstration of how to manage ACI Tenants, VRFs and LLDP policies using Terraform. The lab is based on the repository [terraform_aci](https://gitlab.com/joelwking/terraform_aci). 
+
 ## Section 300
 
 *Session 1* : 45 min. : **GitLab CI/CD Pipeline** 
