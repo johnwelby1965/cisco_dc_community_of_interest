@@ -15,7 +15,7 @@ Create an account on https://www.wwt.com/ using your business email address and 
 > **Note**: To launch labs, you will need to register using an email addresses which is identified as a WWT customer.
 
 ##### Launch the Lab
-Search for `Ansible Student VM` and select the lab. It is at URL [ttps://www.wwt.com/lab/ansible-student-vm](https://www.wwt.com/lab/ansible-student-vm).
+Search for `Ansible Student VM` and select the lab. It is at URL [https://www.wwt.com/lab/ansible-student-vm](https://www.wwt.com/lab/ansible-student-vm).
 
 Launch the lab. Go to https://www.wwt.com/my-wwt/labs - Or select the labs page from the pop-up windows `Your virtual environment is ready. You can access it on the My Labs page.` Click `Access Lab`, then select `Open in ATC Lab Gateway`.  You may be prompted to authenticate with your email address and 14 character password.
 
@@ -132,9 +132,11 @@ $ sudo docker run hello-world
 
 ## Lab 1 : Authentication : Cisco APIC Sandbox
 
+These instructions have the student create a new project and initialize it and clone it into the development environment. Following that, you are then instructed to clone a second repository inside the new project. An alternative is to create a new project and not initialize it, then push an existing remote repository. Instructions for that are in `Push_to_empty_repository.md`.
+
 Logon your GitLab account, create a new project, (https://gitlab.com/projects/new) and name it `workshop`.  The setting can be  'public' or 'private'.  Select the `Initialize with a README`. Select `Create Project`.
 
-**Note:** Before uploading (pushing) to this repo, make the repo PRIVATE under `Settings -> General -> Visibility, project features, permissions` as there will be clear text credentials present in the exercise.
+**Note:** Before uploading (pushing) to this repo, make the repo PRIVATE under `Settings -> General -> Visibility, project features, permissions` as there will be clear text credentials present in the exercise
 
 ### Clone
 
