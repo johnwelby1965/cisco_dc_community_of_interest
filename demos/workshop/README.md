@@ -25,10 +25,8 @@ Make a note of the IP address under `===Student VM Public IP===`. This IP addres
 
 You will need this IP address to configure the VS Code remote development environment under section `Remote Explorer`.
 
-> **Note**: You can test connectivity from your laptop to this instance using a SSH client and private key file (PEM) for the training class. `ssh -i student-key_Truist_ACI.pem ubuntu@<Student VM Public IP>`.
-
-<!--- https://github.com/tylerhatton/ansible-student-lab-tf-template -->  
-
+<!--- https://github.com/tylerhatton/ansible-student-lab-tf-template --> 
+ 
 #### Version Control 
 Both GitLab (GitLab.com) and GitHub (GitHub.com) provide Git Version Control repository management services over the Internet. If you do not already have an account on both services, sign up for both, ideally using the same handle (username) for your account on each service. For this training, the free account tier is all you need.
 
@@ -41,15 +39,19 @@ Hands-on experience (construction) is a key to learning a new topic. Because our
 In addition to a computer running the macOS, Linux, and Windows 10 operating systems, the following software is required for this training environment.
 
 #### Visual Studio Code
+
+As part of the training environment, a remote SSH host is set up that includes Ansible Engine and other necessary software.
+
+There are a number of on-line tutorials to assist with setting up your laptop. See [Remote Development tutorials](https://code.visualstudio.com/docs/remote/remote-tutorials).
+
 VS Code is a free code editor, which runs on the aforementioned operating systems. Download and install it at https://code.visualstudio.com/download. 
 
 While there are a number of suitable editors available for free or for a nominal license fee, this training makes use of the VS Code [Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh). The Visual Studio Code Remote - SSH extension allows you to open a remote folder on any remote machine, (virtual machine, or container) and terminal window with a running SSH server. 
 
+##### Install Remote Development Extension Pack
 Install the [Visual Studio Code Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack).
 
-As part of the training environment, a remote SSH host will be set up which includes a version of Ansible Engine and other necessary software.
-
-There are a number of on-line tutorials to assist with setting up your laptop. See [Remote Development tutorials](https://code.visualstudio.com/docs/remote/remote-tutorials).
+> Note: You may need to restart VS code after installing the Extension Pack for the extension to be recognized.
 
 ##### SSH client
 Your laptop will need a supported SSH client. Refer to [Installing a supported SSH client]https://code.visualstudio.com/docs/remote/troubleshooting#_installing-a-supported-ssh-client).
@@ -74,6 +76,18 @@ If you select the 'gear' icon next to the `remote.ssh.path` select `Copy Setting
 
 Close the Settings window.
 
+###### Testing your SSH client
+
+Some SSH clients will prevent establishing an SSH connection to the remote machine if the key file is group or world readable, so you don't accidentally share your private key with other users on your system.
+
+You should test connectivity from your laptop to the EC2 instance using your SSH client and private key file (PEM) for the training class. 
+
+```bash
+ssh -i student-key.pem ubuntu@<Student VM Public IP>
+```
+If the connection fails due to too open file permissions on the key file, you will need to change the permissions so the key file can be read and written by the owner and no permissions assigned to the group or world, e.g. `chmod 600 student-key.pem`.
+
+
 ##### Remote Explorer
 Prior to class you will be provided access to a remote Linux instance. To configure, select the 'Remote Explorer' icon on the left side of the window. Select the 'gear' icon to create a  'custom configuration file'. Provide an absolute path to the configuration file. For example: `C:\Users\kingjoe\.ssh\config`.
 
@@ -88,7 +102,7 @@ Here are the values you will need to create your entry:
 * `Host` == This will be the IP Address you captured above from the ATC Lab Instance
 * `User` == The username will be **ubuntu**
 * `Hostname` == This will also be the IP Address
-* `IdentityFile` == Save the PEM private key to a file named `student-key_Truist_ACI.pem` and reference it
+* `IdentityFile` == Save the PEM private key to a file named `student-key.pem` and reference it
 
 In the SSH configuration file you will be given the connection information for the remote SSH host. The file entries will look similar to:
 
